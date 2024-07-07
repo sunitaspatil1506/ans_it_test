@@ -16,12 +16,18 @@ import java.util.Optional;
 public class TodoServiceImpl implements TodoService{
     @Autowired
     private TodoRepository todoRepository;
+
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+
     @Override
     public void createTodo(TodoDTO todo) throws ConstraintViolationException, TodoCollectionException {
         Optional<TodoDTO> todoDTOOptional = todoRepository.findByTodo(todo.getTodo());
         if(todoDTOOptional.isPresent()){
             throw new TodoCollectionException(TodoCollectionException.TodoAlreadyExists());
         }else{
+            Long id = sequenceGeneratorService.generateSequence(TodoDTO.class.getSimpleName());
+            todo.setId(id);
             todo.setCreatedAt(new Date(System.currentTimeMillis()));
             todoRepository.save(todo);
         }
@@ -38,7 +44,7 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public TodoDTO getSingleTodo(String id) throws TodoCollectionException {
+    public TodoDTO getSingleTodo(Long id) throws TodoCollectionException {
         Optional<TodoDTO> optionalTodoDTO = todoRepository.findById(id);
         if(!optionalTodoDTO.isPresent()){
             throw new TodoCollectionException(TodoCollectionException.NotFoundException(id));
@@ -48,7 +54,7 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public void updateTodo(String id, TodoDTO todo) throws TodoCollectionException {
+    public void updateTodo(Long id, TodoDTO todo) throws TodoCollectionException {
         Optional<TodoDTO> todoWithId = todoRepository.findById(id);
         Optional<TodoDTO> todoWithSameName = todoRepository.findByTodo(todo.getTodo());
 
@@ -68,7 +74,7 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public void deleteTodoById(String id) throws TodoCollectionException {
+    public void deleteTodoById(Long id) throws TodoCollectionException {
         Optional<TodoDTO> todoDTOOptional = todoRepository.findById(id);
         if(!todoDTOOptional.isPresent()){
             throw new TodoCollectionException(TodoCollectionException.NotFoundException(id));

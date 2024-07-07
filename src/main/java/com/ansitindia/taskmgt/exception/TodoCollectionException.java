@@ -6,7 +6,7 @@ public class TodoCollectionException extends Exception{
         super(message);
     }
 
-    public static String NotFoundException(String id){
+    public static String NotFoundException(Long id){
         return "Todo with "+id+" not found ";
     }
 

@@ -13,7 +13,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class TodoController {
     @Autowired
@@ -40,7 +40,7 @@ public class TodoController {
     }
 
     @GetMapping("/tasks/{id}")
-    public ResponseEntity<?> getSingleTodo(@PathVariable("id") String id){
+    public ResponseEntity<?> getSingleTodo(@PathVariable("id") Long id){
         try{
            return new ResponseEntity<>(todoService.getSingleTodo(id),HttpStatus.OK) ;
         }catch(Exception e){
@@ -49,7 +49,7 @@ public class TodoController {
     }
 
     @PutMapping("/tasks/{id}")
-    public ResponseEntity<?> updateById(@PathVariable("id") String id, @RequestBody TodoDTO todo){
+    public ResponseEntity<?> updateById(@PathVariable("id") Long id, @RequestBody TodoDTO todo){
         try{
             todoService.updateTodo(id, todo);
             return  new ResponseEntity<>("Update todo with  id "+id, HttpStatus.OK);
@@ -61,7 +61,7 @@ public class TodoController {
 
     }
     @DeleteMapping("/tasks/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable("id") String id){
+    public ResponseEntity<?> deleteById(@PathVariable("id") Long id){
         try{
             todoService.deleteTodoById(id);
             return new ResponseEntity<>("Successfully deleted with id "+id, HttpStatus.OK);

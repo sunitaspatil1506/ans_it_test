@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TodoRepository extends MongoRepository<TodoDTO,String> {
+public interface TodoRepository extends MongoRepository<TodoDTO,Long> {
     @Query("{'todo': ?0}")
     Optional<TodoDTO> findByTodo(String todo);
 }

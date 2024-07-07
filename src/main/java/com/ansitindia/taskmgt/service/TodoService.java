@@ -11,11 +11,11 @@ public interface TodoService {
 
     public List<TodoDTO> getAllTodos();
 
-    public TodoDTO getSingleTodo(String id)throws TodoCollectionException;
+    public TodoDTO getSingleTodo(Long id)throws TodoCollectionException;
 
-    public void updateTodo(String id, TodoDTO todo) throws TodoCollectionException;
+    public void updateTodo(Long id, TodoDTO todo) throws TodoCollectionException;
 
-    public void deleteTodoById(String id)throws TodoCollectionException;
+    public void deleteTodoById(Long id)throws TodoCollectionException;
 
 
 }

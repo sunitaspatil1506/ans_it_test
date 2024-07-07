@@ -15,8 +15,11 @@ import java.util.Date;
 @NoArgsConstructor
 @Document(collection = "todos")
 public class TodoDTO {
+//    @Id
+//    private String id;
+
     @Id
-    private String id;
+    private Long id;  // Using Long for auto-incrementing ID
     @NotNull(message = "Title con not be null")
     private String todo;
     @NotNull(message = "Description con not be null")
